@@ -31,22 +31,19 @@ When you run Cage, you're dropped into a special Pry terminal with HTTP related
 commands available.
 
 ```
--> set_hostname! "http://google.com"
-=> "http://google.com"
-]-> get "q=hello world"
-
-=> [{"locacation"=>"http://www.google.com/?q=foobar",
- "content-type"=>"text/html; charset=UTF-8",
- "date"=>"Thu, 26 Jan 2012 16:19:00 GMT",
- "expires"=>"Sat, 25 Feb 2012 16:19:00 GMT",
- "cache-control"=>"public, max-age=2592000",
- "server"=>"gws",
- "content-length"=>"228",
- "x-xss-protection"=>"1; mode=block",
- "x-frame-options"=>"SAMEORIGIN",
- "connection"=>"close"},
- 200,
- "<HTML><HEAD><meta http-equiv=\"content-type\" content=\"text/html;charset=utf-8\">\n<TITLE>301 Moved</TITLE></HEAD><BODY>\n<H1>301 Moved</H1>\nThe document has moved\n<A HREF=\"http://www.google.com/?q=foobar\">here</A>.\r\n</BODY></HTML>\r\n"]
+[
+    [0] 200,
+    [1] {
+                   "server" => "nginx",
+                     "date" => "Thu, 26 Jan 2012 19:56:30 GMT",
+             "content-type" => "application/x-javascript; charset=UTF-8",
+        "transfer-encoding" => "chunked",
+               "connection" => "close",
+                  "expires" => "Thu, 26 Jan 2012 19:56:31 GMT",
+            "cache-control" => "max-age=1"
+    },
+    [2] "{\"Definition\":\"Hackers do *not* generally use this to mean FUBAR..."
+]
 ```
 
 Configuring It
