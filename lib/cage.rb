@@ -1,5 +1,6 @@
 require "pry"
+require "awesome_print"
 require "faraday"
 
-require_relative "cage/version"
-require_relative "cage/console"
+require "cage/version"
+require "cage/console"
