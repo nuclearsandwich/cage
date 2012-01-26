@@ -64,6 +64,8 @@ Roadmap
 
 - 0.0.1 Have a working, if ugly and hacky console.
 
+- 0.0.2 Write tests for whatever I can.
+
 - 0.1.0 Clean up the prompt and solidify the command set. Support .cagerc files.
 
 - 0.2.0 Use decorators to pretty print responses.
