@@ -1,5 +1,5 @@
-require "cage/version"
+require "pry"
+require "faraday"
 
-module Cage
-  # Your code goes here...
-end
+require_relative "cage/version"
+require_relative "cage/console"
