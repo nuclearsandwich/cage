@@ -61,7 +61,10 @@ Roadmap
 
 - 0.0.1 Have a working, if ugly and hacky console.
 
-- 0.0.2 Write tests for whatever I can.
+- 0.0.2 Get XML -> Nokogiri and JSON to Ruby hashes working for [@mcnalu's
+friends][1]
+
+- 0.0.3 Write tests for whatever I can.
 
 - 0.1.0 Clean up the prompt and solidify the command set. Support .cagerc files.
 
@@ -72,4 +75,6 @@ Roadmap
 - 0.4.0 Make it easier to send XML, YAML, and JSON formatted bodies.
 
 - 0.5.0 ???
+
+[1]: http://identi.ca/notice/89369056
 
