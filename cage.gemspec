@@ -21,6 +21,7 @@ the web APIs in your life.
   s.require_paths = ["lib"]
 
   s.add_development_dependency "minitest"
-  s.add_runtime_dependency "pry"
   s.add_runtime_dependency "faraday"
+  s.add_runtime_dependency "pry"
+  s.add_runtime_dependency "awesome_print"
 end
