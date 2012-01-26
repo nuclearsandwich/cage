@@ -31,6 +31,17 @@ When you run Cage, you're dropped into a special Pry terminal with HTTP related
 commands available.
 
 ```
+[1] pry(#<Cage::Console>)> set :scheme, :http
+=> :http
+[2] pry(#<Cage::Console>)> set :domain "duckduckgo.com"
+SyntaxError: unexpected tSTRING_BEG, expecting $end
+set :domain "duckduckgo.com"
+             ^
+[2] pry(#<Cage::Console>)> set :domain, "duckduckgo.com"
+=> "duckduckgo.com"
+[3] pry(#<Cage::Console>)> set :prefix, "?q="
+=> "?q="
+[4] pry(#<Cage::Console>)> get "foobar"
 [
     [0] 200,
     [1] {
