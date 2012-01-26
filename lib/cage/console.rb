@@ -13,8 +13,13 @@ module Cage
     end
 
     def method_missing sym, *args, &block
-      http method, *args, &block if  sym =~ /^(?:get|post|put|delete)$/i
-      super
+      if  sym =~ /^(?:get|post|put|delete)$/i
+        http sym, *args, &block
+      else
+        super
+      end
+    end
+
     end
 
     def http method, *args, &block
