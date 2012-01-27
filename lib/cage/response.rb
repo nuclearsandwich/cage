@@ -4,6 +4,8 @@ module Cage
                           text/javascript|text/x-javascript|text/x-json)}x
     XML_MIME_REGEX = %r{(?:application/xml|text/xml|application/atom)}x
 
+    attr_reader :faraday_response
+
     def initialize faraday_response
       @faraday_response = faraday_response
     end
@@ -40,18 +42,22 @@ module Cage
       end
     end
 
+    def url
+      @faraday_response.env[:url].to_s
+    end
+
     def inspect
       <<-PRETTY
 
-Status: #{@faraday_response.status}
+Status: #{status}
 
 Headers:
-#{@faraday_response.headers.map { |k, v| "  #{k}: #{v}" }.join "\n"}
+#{headers.map { |k, v| "  #{k}: #{v}" }.join "\n"}
 
 Body:
   #{body}
 
-#<Cage::Response>
+#<Cage::Response:(#{url})>
       PRETTY
     end
   end
