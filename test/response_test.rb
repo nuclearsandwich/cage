@@ -43,6 +43,18 @@ describe Cage::Response do
       m
     end
 
+    let(:html_response) do
+      m = MiniTest::Mock.new
+      m.expect :headers, { "content-type" => "text/html" }
+      m.expect :body, <<-HTML
+<html>
+  <head><title>Win</title></head>
+  <body>Win</body>
+</html>
+      HTML
+      m
+    end
+
     it "parses JSON into a hash" do
       Cage::Response.new(json_response).body.must_be_instance_of Hash
     end
@@ -50,6 +62,10 @@ describe Cage::Response do
     it "parses XML into a Nokogiri::XML::Document" do
       Cage::Response.new(xml_response).body.must_be_instance_of(
         Nokogiri::XML::Document)
+    end
+
+    it "keeps the original body string when the filetype isn't detected" do
+      Cage::Response.new(html_response).body.must_be_instance_of String
     end
   end
 end
