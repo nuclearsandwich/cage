@@ -36,7 +36,8 @@ module Cage
     end
 
     def http method, *args, &block
-      @last_response = Cage::Response.new connection.send method, *args, &block
+      @last_response = Cage::Response.new connection.send method.downcase,
+        *args, &block
     end
 
     def set convar, value
