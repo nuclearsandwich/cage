@@ -15,14 +15,16 @@ wraps Faraday and Pry in order to provide an attractive and helpful interface to
 the web APIs in your life.
   DESC
 
-  s.files         = `git ls-files`.split("\n")
-  s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
-  s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
+  s.files         = Dir["lib/**/*"] + ["README.md", "cage.gemspec"]
+  s.test_files    = Dir["test/**/*"]
+  s.executables   = %w[bin/cage].map{ |f| File.basename f }
   s.require_paths = ["lib"]
 
   s.add_development_dependency "rake"
   s.add_development_dependency "minitest"
   s.add_runtime_dependency "faraday"
+  s.add_runtime_dependency "multi_json"
+  s.add_runtime_dependency "nokogiri"
   s.add_runtime_dependency "pry"
   s.add_runtime_dependency "awesome_print"
 end
