@@ -6,11 +6,45 @@ Cage
 What Is It?
 -----------
 
-One of my favorite utilities for testing my APIs is [Rack::Test][2]. It gets
-really offended if you try to use it in an interactive session. I ended up using
-[Faraday][3] and hacked together a set of scripts that made interacting with my
-APIs easy and fun. I've re-written, cleaned up, and expanded upon these scripts
-and the result is Cage. If you don't like the name, I'm open to suggestions. :D
+One of my favorite utilities for testing my APIs is [Rack::Test][2]. However, it
+gets really offended if you try to use it in an interactive session. I ended up
+using [Faraday][3] and hacked together a set of scripts that made interacting
+with my APIs easy and fun. I've re-written, cleaned up, and expanded upon these
+scripts and the result is Cage, a Pry-based console which implements a
+Rack::Test-like internal Ruby DSL. If you don't like the name, I'm open to
+suggestions. :D
+
+What Can It Do?
+---------------
+
+**Short Answer**: Anything [Faraday][3] can do, Cage can do. However, I am
+attempting to make it natural and easy to use in an interactive manner.
+
+By default, the four HTTP verbs, `get`, `post`, `put`, and `delete`, are
+available and if you prefer you can use them in SHOUTCASE in order to feel
+special about it. Each of these will return a Cage::Response, which is a thin
+wrapper around a Faraday::Response that facilitates prettier printing and at the
+moment, the type detection and auto-parsing of JSON and XML.
+
+Cage will also keep track of where you're at so you don't have to keep entering
+the fully-qualified domain name or any prefixes common to all your requests.
+
+For example, if you want to hit version one of the
+[Rubygems.org](http://rubygems.org) API just set the domain and prefix.
+
+```
+[1] pry(#<Cage::Console>)> set :domain, "rubygems.org"¬
+=> "rubygems.org"¬
+[2] pry(#<Cage::Console>)> set :prefix, "api/v1/"¬
+=> "api/v1/"¬
+```
+
+Currently, Cage is attempting to remain feature reduced and free of opinions.
+I have attempted to include  of all elements of the Rack::Test DSL that I wish
+I'd had when hand-testing my APIs or investigating new ones. If there's
+something you wish Cage did that is not currently available. Please do [File an
+issue](https://github.com/nuclearsandwich/cage/issues/new) and I will do my best
+to accomodate your request.
 
 Getting It
 ----------
