@@ -5,4 +5,5 @@ require "multi_json"
 require "nokogiri"
 
 require "cage/version"
+require "cage/response"
 require "cage/console"

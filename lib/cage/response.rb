@@ -12,12 +12,22 @@ module Cage
       @body ||= parsed_body
     end
 
+    def status
+      @faraday_response.status
+    end
+
+    def headers
+      @faraday_response.headers
+    end
+
     def parsed_body
       case format_for @faraday_response.headers["content-type"]
       when :json
         MultiJson.decode @faraday_response.body
       when :xml
         Nokogiri::XML::Document.new @faraday_response.body
+      else
+        @faraday_response.body
       end
     end
 
@@ -28,6 +38,21 @@ module Cage
       when XML_MIME_REGEX
         :xml
       end
+    end
+
+    def inspect
+      <<-PRETTY
+
+Status: #{@faraday_response.status}
+
+Headers:
+#{@faraday_response.headers.map { |k, v| "  #{k}: #{v}" }.join "\n"}
+
+Body:
+  #{body}
+
+#<Cage::Response>
+      PRETTY
     end
   end
 end
