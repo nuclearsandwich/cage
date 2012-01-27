@@ -1,5 +1,7 @@
 require "minitest/autorun"
 require "minitest/pride"
+require "multi_json"
+require "nokogiri"
 require "cage/response"
 
 describe Cage::Response do
@@ -21,9 +23,33 @@ describe Cage::Response do
     end
 
     it "detects xml" do
-      %w[application/xml text/xml].each do |xml_content_type|
+      %w[application/xml text/xml application/atom+xml].each do |xml_content_type|
         subject.format_for(xml_content_type).must_equal :xml
       end
+    end
+  end
+
+  describe "parses body text for known body types" do
+    let(:json_response) do
+      m = MiniTest::Mock.new
+      m.expect :headers, { "content-type" => "application/json" }
+      m.expect :body, File.read("test/rails-gem.json")
+    end
+
+    let(:xml_response) do
+      m = MiniTest::Mock.new
+      m.expect :headers, { "content-type" => "application/atom+xml; charset=UTF-8" }
+      m.expect :body, File.read("test/day9.xml")
+      m
+    end
+
+    it "parses JSON into a hash" do
+      Cage::Response.new(json_response).body.must_be_instance_of Hash
+    end
+
+    it "parses XML into a Nokogiri::XML::Document" do
+      Cage::Response.new(xml_response).body.must_be_instance_of(
+        Nokogiri::XML::Document)
     end
   end
 end
