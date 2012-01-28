@@ -41,6 +41,11 @@ module Cage
       end
     end
 
+    def add_middleware &block
+      @middleware_builder = block
+      reinitialize_connection
+    end
+
     def http method, *args, &block
       @last_response = Cage::Response.new connection.send method.downcase,
         *args, &block
