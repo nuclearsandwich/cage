@@ -25,7 +25,7 @@ the web APIs in your life.
   s.add_runtime_dependency "faraday"
   s.add_runtime_dependency "faraday_middleware"
   s.add_runtime_dependency "multi_xml"
-  s.add_runtime_dependency "multi_json"
+  s.add_runtime_dependency "json"
   s.add_runtime_dependency "nokogiri"
   s.add_runtime_dependency "pry"
   s.add_runtime_dependency "awesome_print"
