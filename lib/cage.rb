@@ -1,5 +1,4 @@
 require "pry"
-require "awesome_print"
 require "multi_xml"
 require "json"
 require "faraday"

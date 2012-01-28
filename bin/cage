@@ -1,5 +1,11 @@
 #!/usr/bin/env ruby
 
 require "cage"
-Cage::Console.start!
+require "trollop"
+
+options = Trollop.options do
+  opt :config, "Specify alternate config file", :default => "./.cagerc.rb"
+end
+
+Cage::Console.start! options[:config]
 

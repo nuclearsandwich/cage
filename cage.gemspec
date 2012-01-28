@@ -28,5 +28,5 @@ the web APIs in your life.
   s.add_runtime_dependency "json"
   s.add_runtime_dependency "nokogiri"
   s.add_runtime_dependency "pry"
-  s.add_runtime_dependency "awesome_print"
+  s.add_runtime_dependency "trollop"
 end
