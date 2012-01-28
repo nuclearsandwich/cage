@@ -1,7 +1,7 @@
 module Cage
   class Console
     CONNECTION_VARIABLES = [:scheme, :domain, :prefix, :headers]
-    HTTP_METHOD_REGEX = /^(?:get|post|put|delete)$/i
+    HTTP_METHOD_REGEX = /^(?:get|post|put|delete|head|options|patch)$/i
 
     attr_reader :connection, :last_response, *CONNECTION_VARIABLES
 
@@ -17,14 +17,17 @@ module Cage
         :headers => @headers do |conn|
           conn.use FaradayMiddleware::ParseXml,  :content_type => /\bxml$/
           conn.use FaradayMiddleware::ParseJson, :content_type => /\bjson$/
-
           conn.adapter Faraday.default_adapter
+          @middleware_builder.call conn unless @middleware_builder.nil?
         end
     end
 
     def method_missing sym, *args, &block
-      if  sym =~ HTTP_METHOD_REGEX
+      case  sym
+      when HTTP_METHOD_REGEX
         http sym, *args, &block
+      when /^(?:basic|token)_auth/
+        connection.send sym, *args, &block
       else
         super
       end
