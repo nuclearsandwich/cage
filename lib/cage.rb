@@ -1,8 +1,9 @@
 require "pry"
 require "awesome_print"
-require "faraday"
+require "multi_xml"
 require "multi_json"
-require "nokogiri"
+require "faraday"
+require "faraday_middleware"
 
 require "cage/version"
 require "cage/response"
