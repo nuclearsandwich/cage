@@ -15,7 +15,7 @@ the web APIs in your life.
   DESC
 
   s.files         = %w[lib/cage.rb lib/cage/console.rb lib/cage/version.rb lib/cage/response.rb]
-  s.test_files    = %w[test/day9.xml test/rails-gem.json test/response_test.rb]
+  s.test_files    = %w[test/day9.xml test/rails-gem.json test/response_test.rb test/console_test.rb]
   s.executables   = %w[cage]
   s.require_paths = %w[lib]
 
@@ -23,6 +23,8 @@ the web APIs in your life.
   s.add_development_dependency "minitest"
   s.add_development_dependency "mustache"
   s.add_runtime_dependency "faraday"
+  s.add_runtime_dependency "faraday_middleware"
+  s.add_runtime_dependency "multi_xml"
   s.add_runtime_dependency "multi_json"
   s.add_runtime_dependency "nokogiri"
   s.add_runtime_dependency "pry"
