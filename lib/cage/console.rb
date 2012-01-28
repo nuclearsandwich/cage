@@ -5,12 +5,10 @@ module Cage
 
     attr_reader :connection, :last_response, *CONNECTION_VARIABLES
 
-
-    def initialize
-      @scheme = "http"
-      @domain = "rubygems.org"
-      @prefix = "api/v1/gems/"
-      @headers = {}
+    def initialize config_file_name = nil
+      configure_pry
+      read_config_file File.expand_path config_file_name if config_file_name
+      default_to_rubygems
       reinitialize_connection
     end
 
@@ -53,8 +51,31 @@ module Cage
       value
     end
 
-    def self.start!
-      new.pry
+    private
+
+    def default_to_rubygems
+      @scheme ||= "http"
+      unless @domain or @prefix
+        @domain = "rubygems.org"
+        @prefix = "api/v1/gems/"
+      end
+      @headers ||= {}
+    end
+
+    def read_config_file config_file_name
+      if File.exists? config_file_name
+        instance_eval File.read(config_file_name), config_file_name
+      end
+    end
+
+    def configure_pry
+      Pry.config.prompt = [
+        proc { "[#{domain}:#{last_response && last_response.status}]->" },
+        proc { "[#{domain}]*>"} ]
+    end
+
+    def self.start! *args
+      new(*args).pry
     end
   end
 end
