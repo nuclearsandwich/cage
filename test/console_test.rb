@@ -1,4 +1,6 @@
+require "pry"
 require "faraday"
+require "faraday_middleware"
 require "minitest/autorun"
 require "minitest/pride"
 require "cage/console"
