@@ -15,12 +15,13 @@ module Cage
     end
 
     def reinitialize_connection
-      @connection = Faraday::Connection.new "#{scheme}://#{domain}/#{prefix}",
-      :headers => @headers do |conn|
-        conn.use FaradayMiddleware::ParseXml, :content_type => %r<\bxml$>
-        conn.use FaradayMiddleware::ParseJson,
-          :content_type => %r<(:?\bjson$|^application/x-javascript)>
-      end
+      @connection = Faraday.new "#{@scheme}://#{@domain}/#{@prefix}",
+        :headers => @headers do |conn|
+          conn.use FaradayMiddleware::ParseXml,  :content_type => /\bxml$/
+          conn.use FaradayMiddleware::ParseJson, :content_type => /\bjson$/
+
+          conn.adapter Faraday.default_adapter
+        end
     end
 
     def method_missing sym, *args, &block

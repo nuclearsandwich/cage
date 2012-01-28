@@ -1,7 +1,7 @@
 require "pry"
 require "awesome_print"
 require "multi_xml"
-require "multi_json"
+require "json"
 require "faraday"
 require "faraday_middleware"
 
