@@ -70,8 +70,8 @@ module Cage
 
     def configure_pry
       Pry.config.prompt = [
-        proc { "[#{domain}:#{last_response && last_response.status}]->" },
-        proc { "[#{domain}]*>"} ]
+        proc { "[#{domain}:#{last_response && last_response.status}]-> " },
+        proc { "[#{domain}]*> " } ]
     end
 
     def self.start! *args
