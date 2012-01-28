@@ -33,10 +33,80 @@ For example, if you want to hit version one of the
 [Rubygems.org](http://rubygems.org) API just set the domain and prefix.
 
 ```
-[1] pry(#<Cage::Console>)> set :domain, "rubygems.org"¬
-=> "rubygems.org"¬
-[2] pry(#<Cage::Console>)> set :prefix, "api/v1/"¬
-=> "api/v1/"¬
+└─> bundle exec cage
+[rubygems.org:]-> set :scheme, :http
+=> :http
+[rubygems.org:]-> set :domain, "rubygems.org"
+=> "rubygems.org"
+[rubygems.org:]-> set :prefix, "api/v1/gems"
+=> "api/v1/gems"
+[rubygems.org:]-> get "rails.json"
+=>
+Status: 200
+
+Headers:
+  date: Sat, 28 Jan 2012 06:57:49 GMT
+  server: Apache/2.2.3 (Red Hat) mod_ssl/2.2.3 OpenSSL/0.9.8e-fips-rhel5 Phusion_Passenger/3.0.11
+  x-powered-by: Phusion Passenger (mod_rails/mod_rack) 3.0.11
+  etag: "6bc2525a176ae07870d12b35d6c78dcf"
+  cache-control: max-age=0, private, must-revalidate
+  x-ua-compatible: IE=Edge,chrome=1
+  x-runtime: 0.025598
+  status: 200
+  content-length: 1096
+  connection: close
+  content-type: application/json; charset=utf-8
+
+Body:
+  {"name"=>"rails", "downloads"=>7422057, "version"=>"3.2.1", .... }
+
+#<Cage::Response:(http://rubygems.org/api/v1/gems/rails.json)>
+
+[rubygems.org:200]-> get "rails.xml"
+=>
+Status: 200
+
+Headers:
+  date: Sat, 28 Jan 2012 06:57:53 GMT
+  server: Apache/2.2.3 (Red Hat) mod_ssl/2.2.3 OpenSSL/0.9.8e-fips-rhel5 Phusion_Passenger/3.0.11
+  x-powered-by: Phusion Passenger (mod_rails/mod_rack) 3.0.11
+  etag: "fd13fd2f31fa180391b2e9a9b3c08b79"
+  cache-control: max-age=0, private, must-revalidate
+  x-ua-compatible: IE=Edge,chrome=1
+  x-runtime: 0.034550
+  status: 200
+  content-length: 1915
+  connection: close
+  content-type: application/xml; charset=utf-8
+
+Body:
+  {"rubygem"=>{"name"=>"rails", "downloads"=>7422057, "version"=>"3.2.1", ... }
+
+#<Cage::Response:(http://rubygems.org/api/v1/gems/rails.xml)>
+
+[rubygems.org:200]-> get "wontbethere"
+=>
+Status: 404
+
+Headers:
+  date: Sat, 28 Jan 2012 07:43:53 GMT
+  server: Apache/2.2.3 (Red Hat) mod_ssl/2.2.3 OpenSSL/0.9.8e-fips-rhel5 Phus
+  x-powered-by: Phusion Passenger (mod_rails/mod_rack) 3.0.11
+  cache-control: no-cache
+  x-ua-compatible: IE=Edge,chrome=1
+  x-runtime: 0.011617
+  status: 404
+  vary: Accept-Encoding
+  content-length: 1053
+  connection: close
+  content-type: text/html; charset=utf-8
+
+Body:
+  <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
 ```
 
 Currently, Cage is attempting to remain feature reduced and free of opinions.
@@ -72,46 +142,28 @@ around with your work.
 When you run Cage, you're dropped into a special Pry terminal with HTTP related
 commands available.
 
-```
-└─> bundle exec cage
-[1] pry(#<Cage::Console>)> set :scheme, :http
-=> :http
-[2] pry(#<Cage::Console>)> set :domain, "rubygems.org"
-=> "rubygems.org"
-[3] pry(#<Cage::Console>)> set :prefix, "api/v1/gems/"
-=> "api/v1/gems/"
-[4] pry(#<Cage::Console>)> get "rails.json
-[4] pry(#<Cage::Console>)* !
-Input buffer cleared!
-[5] pry(#<Cage::Console>)> get "rails.json"
-=>
-Status: 200
+### Available Commands ###
 
-Headers:
-  date: Fri, 27 Jan 2012 08:18:39 GMT
-  server: Apache/2.2.3 (Red Hat) mod_ssl/2.2.3 OpenSSL/0.9.8e-fips-rhel5 Phusion_Passenger/3.0.11
-  x-powered-by: Phusion Passenger (mod_rails/mod_rack) 3.0.11
-  etag: "80b55645852de87d6343e314998b5df7"
-  cache-control: max-age=0, private, must-revalidate
-  x-ua-compatible: IE=Edge,chrome=1
-  x-runtime: 0.020594
-  status: 200
-  content-length: 1096
-  connection: close
-  content-type: application/json; charset=utf-8
+- HTTP Methods:
+  - `GET`/`get`: url, params, headers
+  - `HEAD`/`head`: url, params, headers
+  - `DELETE`/`delete`: url, params, headers
+  - `POST`/`post`: url, body, headers
+  - `PUT`/`put`: url, body, headers
+  - `PATCH`/`patch`: url, body, headers
 
-Body:
-  {"name"=>"rails", "downloads"=>7403026, "version"=>"3.2.1", "version_downloads"=>2598, "authors"=>"David Heinemeier Hansson", "info"=>"Ruby on Rails is a full-stack web framework optimized for programmer happiness and sustainable productivity. It encourages beautiful code by favoring convention over configuration.", "project_uri"=>"http://rubygems.org/gems/rails", "gem_uri"=>"http://rubygems.org/gems/rails-3.2.1.gem", "homepage_uri"=>"http://www.rubyonrails.org", "wiki_uri"=>"http://wiki.rubyonrails.org", "documentation_uri"=>"http://api.rubyonrails.org", "mailing_list_uri"=>"http://groups.google.com/group/rubyonrails-talk", "source_code_uri"=>"http://github.com/rails/rails", "bug_tracker_uri"=>"http://github.com/rails/rails/issues", "dependencies"=>{"development"=>[], "runtime"=>[{"name"=>"actionmailer", "requirements"=>"= 3.2.1"}, {"name"=>"actionpack", "requirements"=>"= 3.2.1"}, {"name"=>"activerecord", "requirements"=>"= 3.2.1"}, {"name"=>"activeresource", "requirements"=>"= 3.2.1"}, {"name"=>"activesupport", "requirements"=>"= 3.2.1"}, {"name"=>"bundler", "requirements"=>"~> 1.0"}, {"name"=>"railties", "requirements"=>"= 3.2.1"}]}}
+- Cage Methods for Requests
+  - `basic_auth`: login, pass
+  - `token_auth`: token, options
+  - `add_middleware`: middleware_builder_block
 
-#<Cage::Response>
-
-[6] pry(#<Cage::Console>)>
-```
+- Anything else Ruby can do...
 
 Configuring It
 --------------
 
-***NOTE*** you can't yet. See Roadmap.
+***NOTE*** Global Configs aren't supported yet. Local configs and specified
+configs are working.
 
 Cage will look first for a global `~/.cagerc.rb` file, then for a localr
 `./cagerc.rb` in the working directory. Both are essentially instance_eval'd
@@ -120,27 +172,42 @@ The global one is run first, so you can overload it with a local config. The
 local config is for setting up project defaults, you can even automate your
 initial authentication if you want.
 
-Roadmap
--------
+Changelog / Roadmap
+-------------------
 
 - 0.0.1 Have a working, if ugly and hacky console. DONE
 
 - 0.0.2 Get XML -> Nokogiri and JSON to Ruby hashes working for [@mcnalu's
 friends][1] DONE
 
-- 0.0.3 Write tests for whatever I can. WIP
+- 0.0.3 Write tests for whatever I can. WIP Study Pry's tests and read up on
+  testing apps like this in [Build Awesome Command-Line Applicationss in
+  Ruby][5]
 
-- 0.1.0 Clean up the prompt and solidify the command set. Support .cagerc files.
+- 0.1.0 Switch to using [Faraday Middleware][4] for parsing instead mf my hack
+  solutions. Both XML and JSON now return Hash bodies, all other formats will
+  have string bodies.
 
-- 0.2.0 Use decorators to pretty print responses.
+- 0.1.1
+  - Provide a Cage prompt string.
+  - Solidify and document the command set, which now includes HEAD, OPTIONS, and
+    PATCH.
+  - Support `./.cagerc.rb` configuration files and the `-c PATH_TO_CONFIG` flag.
+  - Provide documented interface to allow users to add their own Faraday
+    middleware.
+
+- 0.2.0 Use decorators to pretty print responses. PARTWAY DONE
 
 - 0.3.0 Auto detect and parse incoming body types like XML, JSON, wwwurlencode.
+  DONE
 
 - 0.4.0 Make it easier to send XML, YAML, and JSON formatted bodies.
 
-- 0.5.0 ???
+- 0.5.0 Make some decisions about Auth.
 
 [1]: http://identi.ca/notice/89369056
 [2]: https://github.com/brynary/rack-test
 [3]: https://github.com/technoweenie/faraday
+[4]: https://github.com/pengwynn/faraday_middleware
+[5]: http://pragprog.com/book/dccar/build-awesome-command-line-applications-in-ruby
 
