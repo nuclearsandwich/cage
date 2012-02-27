@@ -1,5 +1,4 @@
 require "minitest/autorun"
-require "minitest/pride"
 require "cage/response"
 
 describe Cage::Response do
