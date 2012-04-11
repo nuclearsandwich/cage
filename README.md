@@ -172,38 +172,15 @@ The global one is run first, so you can overload it with a local config. The
 local config is for setting up project defaults, you can even automate your
 initial authentication if you want.
 
-Changelog / Roadmap
--------------------
+Roadmap
+-------
 
-- 0.0.1 Have a working, if ugly and hacky console. DONE
+- 0.2.0 Write tests for whatever I can. WIP Study Pry's tests and read up on
+  testing apps like this in [Build Awesome Command-Line Applications in Ruby][5]
 
-- 0.0.2 Get XML -> Nokogiri and JSON to Ruby hashes working for [@mcnalu's
-friends][1] DONE
+- 0.3.0 Make it easier to send XML, YAML, and JSON formatted bodies.
 
-- 0.0.3 Write tests for whatever I can. WIP Study Pry's tests and read up on
-  testing apps like this in [Build Awesome Command-Line Applicationss in
-  Ruby][5]
-
-- 0.1.0 Switch to using [Faraday Middleware][4] for parsing instead mf my hack
-  solutions. Both XML and JSON now return Hash bodies, all other formats will
-  have string bodies.
-
-- 0.1.1
-  - Provide a Cage prompt string.
-  - Solidify and document the command set, which now includes HEAD, OPTIONS, and
-    PATCH.
-  - Support `./.cagerc.rb` configuration files and the `-c PATH_TO_CONFIG` flag.
-  - Provide documented interface to allow users to add their own Faraday
-    middleware.
-
-- 0.2.0 Use decorators to pretty print responses. PARTWAY DONE
-
-- 0.3.0 Auto detect and parse incoming body types like XML, JSON, wwwurlencode.
-  DONE
-
-- 0.4.0 Make it easier to send XML, YAML, and JSON formatted bodies.
-
-- 0.5.0 Make some decisions about Auth.
+- 0.4.0 Make some decisions about Auth.
 
 [1]: http://identi.ca/notice/89369056
 [2]: https://github.com/brynary/rack-test
