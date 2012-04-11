@@ -2,7 +2,7 @@ Changelog
 =========
 
 ### v0.1.2
-* a87acf6 2012-04-11 | *bump* [Steven! Ragnarök]
+* 8aebb83 2012-04-11 | *bump* [Steven! Ragnarök]
 * 55accbb 2012-04-11 | Add ability to specify :port connection variable. [Steven! Ragnarök]
 
 ### v0.1.1
