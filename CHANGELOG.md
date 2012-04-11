@@ -2,7 +2,8 @@ Changelog
 =========
 
 ### v0.1.2
-* 55accbb 2012-04-11 | Add ability to specify :port connection variable. (HEAD, master) [Steven! Ragnarök]
+* a87acf6 2012-04-11 | *bump* [Steven! Ragnarök]
+* 55accbb 2012-04-11 | Add ability to specify :port connection variable. [Steven! Ragnarök]
 
 ### v0.1.1
 * 499b864 2012-01-28 | Version bump to 0.1.1. (v0.1.1) [Steven! Ragnarök]
