@@ -20,6 +20,9 @@ describe Cage::Console do
     subject.set :domain, "ultrasaurus.com"
     subject.instance_variable_get(:@domain).must_equal "ultrasaurus.com"
 
+    subject.set :port, 80
+    subject.instance_variable_get(:@port).must_equal 80
+
     subject.set :prefix, "blog"
     subject.instance_variable_get(:@prefix).must_equal "blog"
 

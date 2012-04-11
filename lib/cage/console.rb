@@ -1,6 +1,6 @@
 module Cage
   class Console
-    CONNECTION_VARIABLES = [:scheme, :domain, :prefix, :headers]
+    CONNECTION_VARIABLES = [:scheme, :domain, :prefix, :port, :headers]
     HTTP_METHOD_REGEX = /^(?:get|post|put|delete|head|options|patch)$/i
 
     attr_reader :connection, :last_response, *CONNECTION_VARIABLES
@@ -13,7 +13,7 @@ module Cage
     end
 
     def reinitialize_connection
-      @connection = Faraday.new "#{@scheme}://#{@domain}/#{@prefix}",
+      @connection = Faraday.new "#{@scheme}://#{@domain}#{":#{@port}" if @port}/#{@prefix}",
         :headers => @headers do |conn|
           conn.use FaradayMiddleware::ParseXml,  :content_type => /\bxml$/
           conn.use FaradayMiddleware::ParseJson, :content_type => /\bjson$/
@@ -22,6 +22,7 @@ module Cage
         end
     end
 
+    # TODO: Use same logic in both method_missing and respond_to?
     def method_missing sym, *args, &block
       case  sym
       when HTTP_METHOD_REGEX
