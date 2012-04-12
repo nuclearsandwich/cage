@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <title>Cage by nuclearsandwich</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Cage</h1>
+        <h2>A Faraday Cage for your HTTP Interactions.</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/nuclearsandwich/cage/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/nuclearsandwich/cage/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/nuclearsandwich/cage" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h2>What Is It?</h2>
+
+<p>One of my favorite utilities for testing my APIs is <a href="https://github.com/brynary/rack-test">Rack::Test</a>. However, it gets really offended if you try to use it in an interactive session. I ended up using <a href="https://github.com/technoweenie/faraday">Faraday</a> and hacked together a set of scripts that made interacting with my APIs easy and fun. I've re-written, cleaned up, and expanded upon these scripts and the result is Cage, a <a href="http://pry.github.com">Pry</a>-based console which implements a Rack::Test-like internal Ruby DSL. If you don't like the name, I'm open to suggestions. :D</p>
+
+<h2>What Can It Do?</h2>
+
+<p><strong>Short Answer</strong>: Anything <a href="https://github.com/technoweenie/faraday">Faraday</a> can do, Cage can do. However, I am attempting to make it natural and easy to use in an interactive manner.</p>
+
+<p>By default, the HTTP verbs <code>get</code>, <code>post</code>, <code>put</code>, <code>delete</code>, <code>patch</code>, and <code>options</code> are available and if you prefer you can use them in SHOUTCASE in order to feel special about it. Each of these will return a Cage::Response, which is a thin wrapper around a Faraday::Response that facilitates prettier printing.</p>
+
+<p>Cage will also keep track of where you're at so you don't have to keep entering the fully-qualified domain name or any prefixes common to all your requests.</p>
+
+<p>For example, if you want to hit version one of the <a href="http://rubygems.org">Rubygems.org</a> API just set the domain and prefix.</p>
+
+<pre><code>└─&gt; bundle exec cage
+[rubygems.org:]-&gt; set :scheme, :http
+=&gt; :http
+[rubygems.org:]-&gt; set :domain, "rubygems.org"
+=&gt; "rubygems.org"
+[rubygems.org:]-&gt; set :prefix, "api/v1/gems"
+=&gt; "api/v1/gems"
+[rubygems.org:]-&gt; get "rails.json"
+=&gt;
+Status: 200
+
+Headers:
+  date: Sat, 28 Jan 2012 06:57:49 GMT
+  server: Apache/2.2.3 (Red Hat) mod_ssl/2.2.3 OpenSSL/0.9.8e-fips-rhel5 Phusion_Passenger/3.0.11
+  x-powered-by: Phusion Passenger (mod_rails/mod_rack) 3.0.11
+  etag: "6bc2525a176ae07870d12b35d6c78dcf"
+  cache-control: max-age=0, private, must-revalidate
+  x-ua-compatible: IE=Edge,chrome=1
+  x-runtime: 0.025598
+  status: 200
+  content-length: 1096
+  connection: close
+  content-type: application/json; charset=utf-8
+
+Body:
+  {"name"=&gt;"rails", "downloads"=&gt;7422057, "version"=&gt;"3.2.1", .... }
+
+#&lt;Cage::Response:(<a href="http://rubygems.org/api/v1/gems/rails.json">http://rubygems.org/api/v1/gems/rails.json</a>)&gt;
+
+[rubygems.org:200]-&gt; get "rails.xml"
+=&gt;
+Status: 200
+
+Headers:
+  date: Sat, 28 Jan 2012 06:57:53 GMT
+  server: Apache/2.2.3 (Red Hat) mod_ssl/2.2.3 OpenSSL/0.9.8e-fips-rhel5 Phusion_Passenger/3.0.11
+  x-powered-by: Phusion Passenger (mod_rails/mod_rack) 3.0.11
+  etag: "fd13fd2f31fa180391b2e9a9b3c08b79"
+  cache-control: max-age=0, private, must-revalidate
+  x-ua-compatible: IE=Edge,chrome=1
+  x-runtime: 0.034550
+  status: 200
+  content-length: 1915
+  connection: close
+  content-type: application/xml; charset=utf-8
+
+Body:
+  {"rubygem"=&gt;{"name"=&gt;"rails", "downloads"=&gt;7422057, "version"=&gt;"3.2.1", ... }
+
+#&lt;Cage::Response:(<a href="http://rubygems.org/api/v1/gems/rails.xml">http://rubygems.org/api/v1/gems/rails.xml</a>)&gt;
+
+[rubygems.org:200]-&gt; get "wontbethere"
+=&gt;
+Status: 404
+
+Headers:
+  date: Sat, 28 Jan 2012 07:43:53 GMT
+  server: Apache/2.2.3 (Red Hat) mod_ssl/2.2.3 OpenSSL/0.9.8e-fips-rhel5 Phus
+  x-powered-by: Phusion Passenger (mod_rails/mod_rack) 3.0.11
+  cache-control: no-cache
+  x-ua-compatible: IE=Edge,chrome=1
+  x-runtime: 0.011617
+  status: 404
+  vary: Accept-Encoding
+  content-length: 1053
+  connection: close
+  content-type: text/html; charset=utf-8
+
+Body:
+  &lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;meta http-equiv="Content-Type" content="text/html; charset=utf-8"&gt;
+
+</code></pre>
+
+<p>Currently, Cage is attempting to remain feature reduced and free of opinions.  I have attempted to include  of all elements of the Rack::Test DSL that I wish I'd had when hand-testing my APIs or investigating new ones. If there's something you wish Cage did that is not currently available. Please do <a href="https://github.com/nuclearsandwich/cage/issues/new">File an issue</a> and I will do my best to accommodate your request.</p>
+
+<h2>Getting It</h2>
+
+<div class="highlight">
+<pre><span class="n">group</span> <span class="ss">:development</span> <span class="k">do</span>
+  <span class="n">gem</span> <span class="s2">"cage"</span>
+<span class="k">end</span>
+</pre>
+</div>
+
+
+<h2>Using It</h2>
+
+<p>Running <code>cage</code> will begin a console session. Cage is like a specialized IRB, but for HTTP interactions. Imagine that you are working on an API. <a href="https://github.com/brynary/rack-test">Rack::Test</a> is an awesome tool but when you try to use it interactively you get an interesting display of fireworks(read: stacktraces). Cage is based on a utility script I wrote while working on a REST API. Some days, you just want to monkey around with your work.</p>
+
+<p>When you run Cage, you're dropped into a special Pry terminal with HTTP related commands available.</p>
+
+<h3>Available Commands</h3>
+
+<ul>
+<li>
+<p>HTTP Methods:</p>
+
+<ul>
+<li>
+<code>GET</code>/<code>get</code>: url, params, headers</li>
+<li>
+<code>HEAD</code>/<code>head</code>: url, params, headers</li>
+<li>
+<code>DELETE</code>/<code>delete</code>: url, params, headers</li>
+<li>
+<code>POST</code>/<code>post</code>: url, body, headers</li>
+<li>
+<code>PUT</code>/<code>put</code>: url, body, headers</li>
+<li>
+<code>PATCH</code>/<code>patch</code>: url, body, headers</li>
+</ul>
+</li>
+<li>
+<p>Cage Methods for Requests</p>
+
+<ul>
+<li>
+<code>basic_auth</code>: login, pass</li>
+<li>
+<code>token_auth</code>: token, options</li>
+<li>
+<code>add_middleware</code>: middleware_builder_block</li>
+</ul>
+</li>
+<li><p>Anything else Ruby can do...</p></li>
+</ul><h2>Configuring It</h2>
+
+<p><strong><em>NOTE</em></strong> Global Configs aren't supported yet. Local configs and specified configs are working.</p>
+
+<p>Cage will look first for a global <code>~/.cagerc.rb</code> file, then for a local <code>./cagerc.rb</code> in the working directory. Both are essentially instance_eval'd into your new Cage console so anything that works in Cage will work in a config.  The global one is run first, so you can overload it with a local config. The local config is for setting up project defaults, you can even automate your initial authentication if you want.</p>
+
+<h2>Roadmap</h2>
+
+<ul>
+<li><p>0.1.3 Global config specified in <code>~/.cagerc.rb</code></p></li>
+<li><p>0.2.0 Write tests for whatever I can. WIP Study Pry's tests and read up on
+testing apps like this in <a href="http://pragprog.com/book/dccar/build-awesome-command-line-applications-in-ruby">Build Awesome Command-Line Applications in Ruby</a></p></li>
+<li><p>0.3.0 Make it easier to send XML, YAML, and JSON formatted bodies.</p></li>
+<li><p>0.4.0 Make some decisions about Auth.</p></li>
+</ul>
+      </section>
+    </div>
+
+    
+  </body>
+</html>
