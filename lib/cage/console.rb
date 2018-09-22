@@ -22,7 +22,6 @@ module Cage
         end
     end
 
-    # TODO: Use same logic in both method_missing and respond_to?
     def method_missing sym, *args, &block
       case  sym
       when HTTP_METHOD_REGEX
@@ -35,7 +34,10 @@ module Cage
     end
 
     def respond_to? method
-      if method =~ HTTP_METHOD_REGEX
+      case  method
+      when HTTP_METHOD_REGEX
+        true
+      when /^(?:basic|token)_auth/
         true
       else
         super

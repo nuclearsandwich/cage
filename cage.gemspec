@@ -14,8 +14,8 @@ wraps Faraday and Pry in order to provide an attractive and helpful interface to
 the web APIs in your life.
   DESC
 
-  s.files         = %w[lib/cage/console.rb lib/cage/response.rb lib/cage/version.rb lib/cage.rb]
-  s.test_files    = %w[test/console_test.rb test/day9.xml test/rails-gem.json test/response_test.rb]
+  s.files         = %w[lib/cage/version.rb lib/cage/response.rb lib/cage/console.rb lib/cage.rb]
+  s.test_files    = %w[test/day9.xml test/response_test.rb test/console_test.rb test/rails-gem.json]
   s.executables   = %w[cage]
   s.require_paths = %w[lib]
 
